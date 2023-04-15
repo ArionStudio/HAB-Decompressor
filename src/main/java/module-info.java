@@ -8,4 +8,6 @@ module huffman.decompressor.hab {
 
     opens huffman.decompressor.hab to javafx.fxml;
     exports huffman.decompressor.hab;
+    exports huffman.decompressor.hab.gui;
+    opens huffman.decompressor.hab.gui to javafx.fxml;
 }

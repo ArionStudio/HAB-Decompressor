@@ -1,4 +1,4 @@
-package huffman.decompressor.hab;
+package huffman.decompressor.hab.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -11,4 +11,5 @@ public class HelloController {
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
     }
+
 }
