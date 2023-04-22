@@ -1,6 +1,6 @@
 package huffman.decompressor.hab.decompiler;
 
-public class Main {
+public class Controller {
     public static void main(String[] args) {
         GetOpt getOpt;
         try{
@@ -14,9 +14,13 @@ public class Main {
             return;
         }
         try {
-            BitFileReader fileReader = BitFileReader.getInstance("C:\\Users\\Adrian\\OneDrive - Politechnika Warszawska\\SEMEMESTR 2\\JIMP2\\Coder_Huffman_in_C\\KAPPA\\data\\" + getOpt.getOption("i"));
+            String fileName = "C:\\Users\\Adrian\\OneDrive - Politechnika Warszawska\\SEMEMESTR 2\\JIMP2\\Coder_Huffman_in_C\\KAPPA\\data\\" + getOpt.getOption("i");
+            Decompiler decompiler = new Decompiler(fileName);
+            decompiler.getBasicInfo();
+            Log.println(decompiler.toString());
         } catch (Exception e) {
             Log.error("File not found");
+            Log.error(e.getMessage());
             return;
         }
 
