@@ -46,7 +46,17 @@ public class TreeNode {
                         }
                         k = true;
                     }
-                    System.out.print(tab[iterateByArray]);
+                    if((tab[iterateByArray] < 10) && (tab[iterateByArray] >= 0) ) {
+                        System.out.print("  "+tab[iterateByArray]+"  ");
+                    } else if ((tab[iterateByArray] < 100) && (tab[iterateByArray] >= 10)) {
+                        System.out.print(" "+tab[iterateByArray]+"  ");
+                    }else if ((tab[iterateByArray] < 1000) && (tab[iterateByArray] >= 100)) {
+                        System.out.print(" "+tab[iterateByArray]+" ");
+                    }else if ((tab[iterateByArray] < 10000) && (tab[iterateByArray] >= 1000)) {
+                        System.out.print(" "+tab[iterateByArray]);
+                    }else if ((tab[iterateByArray] <= Short.MAX_VALUE) && (tab[iterateByArray] >= 10000)) {
+                        System.out.print(tab[iterateByArray]);
+                    }
                     for (int i = 0; i < /*middleWidth*/tabOfMiddleValuesWidths[it+count]; i++) {
                         System.out.print(" ");
                     }
@@ -60,7 +70,7 @@ public class TreeNode {
                 rightWidth++;
                 if(amountOfArray == 0)
                     break;
-                //TODO:Trzeba uwzglednic to ze laczniki "/" "\" moga byc nie tylko od jednego noda ale dalej sie rozciagac np / \  / \
+
                 int tempMiddleWidth = middleWidth;
 
                 System.out.println();
