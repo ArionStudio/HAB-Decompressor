@@ -8,17 +8,23 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController extends Application {
+    private static int zalezna;
+    public static Stage stage;
+
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage primaryStage) throws IOException {
+        stage = primaryStage;
         FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("hello-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1360, 720);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
+        Scene scenePrimary = new Scene(fxmlLoader.load(), 1360, 720);
+        primaryStage.setTitle("Hello!");
+
+        primaryStage.setScene(scenePrimary);
+        primaryStage.show();
     }
 
     public static void startGui() {
-
         launch();
     }
+
+
 }
