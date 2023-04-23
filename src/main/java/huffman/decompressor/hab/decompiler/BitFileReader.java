@@ -4,15 +4,19 @@ import java.io.*;
 
 
 public class BitFileReader {
+    private static String fileName;
     private static BitFileReader instance;
     private static long buffor;
     private static int unreadBits;
     private static FileInputStream file;
     private static DataInput byteFile;
     private BitFileReader(String FileName) throws Exception {
+        buffor = 0;
+        unreadBits = 0;
         try {
             file = new FileInputStream(FileName);
             byteFile = new DataInputStream(file);
+            fileName = FileName;
         } catch (FileNotFoundException e) {
             throw new Exception(e);
         }
@@ -25,37 +29,34 @@ public class BitFileReader {
         return instance;
     }
 
-    public static void resetReader() throws IOException {
+    public static void resetReader() throws Exception {
         buffor = 0;
         unreadBits = 0;
-        file.reset();
+        try {
+            file = new FileInputStream(fileName);
+            byteFile = new DataInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new Exception(e);
+        }
     }
 
     // Implementation of function 'readExactBits'
     public static int readNBits(int n) throws Exception {
-        Log.println("To read: " + n);
         while(unreadBits < n){
             long a = 0;
             if(n - unreadBits <= 8){
                 a = (long) byteFile.readUnsignedByte();
-
-                Log.println(BitFileReader.toBiteString(a, 8));
                 unreadBits += 8;
             }else{
                 a = (long) byteFile.readUnsignedShort();
-                Log.println(BitFileReader.toBiteString(a, 16));
                 unreadBits += 16;
             }
-            Log.println("A before: " + BitFileReader.toBiteString(a, 64));
             a <<= 32 - unreadBits;
-            Log.println("A before: " + BitFileReader.toBiteString(a, 64));
             buffor += a;
         }
         // Read
         long result = buffor;
-        Log.println("Result before: " + BitFileReader.toBiteString(result, 64));
         result >>>= 32 - n;
-        Log.println("Result after: " + BitFileReader.toBiteString(result, 64));
         unreadBits -= n;
         buffor <<= n;
         buffor &= 0xfFFFFFFFL;
@@ -77,8 +78,16 @@ public class BitFileReader {
         return readNBits(unreadBits);
     }
 
+
     public static int byteToEnd() throws IOException {
-        return file.available();
+        return file.available() * 8;
     }
 
+    public static int getUnreadBits() {
+        return unreadBits;
+    }
+
+    public static long getBuffor() {
+        return buffor;
+    }
 }

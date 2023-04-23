@@ -18,6 +18,8 @@ public class Controller {
             Decompiler decompiler = new Decompiler(fileName);
             decompiler.getBasicInfo();
             Log.println(decompiler.toString());
+            decompiler.makeHuffmanDictionary();
+            decompiler.decompressFile();
         } catch (Exception e) {
             Log.error("File not found");
             Log.error(e.getMessage());

@@ -1,6 +1,8 @@
 package huffman.decompressor.hab.decompiler;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Decompiler {
 
@@ -18,6 +20,8 @@ public class Decompiler {
     private boolean fileStatus;
 
     private ArrayList<ArrayList<Short>> treeLayerArray;
+
+    private HuffmanDictionary dictionary;
     private static final short CRC_CODE = (short) 252;
     private String password;
 
@@ -59,10 +63,69 @@ public class Decompiler {
 
             treeLayerArray = getSimpleDictionaryFromFile();
             fileStatus = xorValidte();
+
+
+//
         }catch (Exception e){
             throw new Exception("File error: unexpected end\n"); //
         }
+        try{
+            makeHuffmanDictionary();
+        }catch (Exception e){
+            e.printStackTrace();
+            System.err.println("\n" + e.getMessage());
+            System.exit(1);
+        }
     }
+
+    public void makeHuffmanDictionary() {
+        HuffmanTree huffmanTree = new  HuffmanTree(treeLayerArray);
+        huffmanTree.printTree();
+        dictionary = new HuffmanDictionary(huffmanTree);
+    }
+
+    public void decompressFile() throws Exception {
+        StringBuilder decompressedFile = new StringBuilder();
+        int array [] = {8, 8, 8, 1, 1, 8, 5, compressionLevel, compressionLevel - 1, compressionLevel, 3};
+        BitFileReader.resetReader();
+        for (int i = 0; i < array.length; i++) {
+            short readedBits = (short) BitFileReader.readNBits(array[i]);
+        }
+
+        short x;
+        int layerCounter = treeMaxDepth - treeMinDepth + 1;
+        while (layerCounter-- > 0){
+            short layerBreakPoint = (short) BitFileReader.readNBits(treeLayerSize);
+            for(int j = 0; j < layerBreakPoint; j++){
+                x = (short)  BitFileReader.readNBits(compressionLevel);
+            }
+        }
+
+        Log.println("Unread: " + BitFileReader.getUnreadBits());
+
+        Log.println("Unread: " + BitFileReader.getBuffor());
+        BitFileReader.readUnreadBits();
+
+        Log.println("Unread: " + BitFileReader.getUnreadBits());
+        Log.println("Unread: " + BitFileReader.getBuffor());
+
+        while(BitFileReader.byteToEnd() > 0 || BitFileReader.getUnreadBits() > originUsslessBits ){
+            short code = dictionary.findInDictionary();
+            if(code != -1){
+                decompressedFile.append((char)code);
+            }else{
+                if(BitFileReader.byteToEnd() <= originUsslessBits){
+                    Log.println("File decompressed");
+                }else{
+                    Log.error("when decompress file");
+                }
+            }
+        }
+        System.out.println(decompressedFile);
+    }
+
+
+
 
     private ArrayList<ArrayList<Short>> getSimpleDictionaryFromFile() throws Exception {
         ArrayList<ArrayList<Short>> array = new ArrayList<>();
@@ -76,6 +139,7 @@ public class Decompiler {
                 x = (short)  BitFileReader.readNBits(compressionLevel);
                 array.get(i).add(x);
             }
+            Collections.reverse(array.get(i));
             i++;
         }
         BitFileReader.readUnreadBits();
