@@ -72,5 +72,35 @@ public class HuffmanTree {
         }
         System.out.println();
     }
+
+    public ArrayList<ArrayList<Short>> makeFullArrayTree(){
+        ArrayList<ArrayList<Short>> fullArrayTree = new ArrayList<>();
+        for (int i = 0; i < huffmanArray.size(); i++) {
+            fullArrayTree.add(new ArrayList<>());
+        }
+        int huffmanSize = 0;
+        for (int i = huffmanArray.size() - 1; i >= 0; i--) {
+            fullArrayTree.add(new ArrayList<>());
+            int j = 0;
+            while (j < huffmanArray.get(huffmanSize).size()){
+                fullArrayTree.get(i).add(huffmanArray.get(huffmanSize).get(j).code);
+                j++;
+            }
+            fullArrayTree.get(i).add((short) - (Math.pow(2, i) - huffmanArray.get(huffmanSize).size() + 2));
+            huffmanSize++;
+        }
+        return fullArrayTree;
+    }
+
+    public void printArrayTree(){
+        ArrayList<ArrayList<Short>> fullArrayTree = makeFullArrayTree();
+        for (ArrayList<Short> shorts : fullArrayTree) {
+            for (Short aShort : shorts) {
+                System.out.print(aShort + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
 }
 

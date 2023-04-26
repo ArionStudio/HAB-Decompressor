@@ -10,12 +10,14 @@ public class GetOpt {
     private static ArrayList<String> multiArgs;
     private static ArrayList<String> existingArgs;
 
-    public class OptExeption extends Exception{
-        private int errorCode;
+    public static class OptExeption extends Exception{
+        private final int errorCode;
 
         public OptExeption(String messege, int errorCode){
             super(messege);
             this.errorCode = errorCode;
+
+
         }
         public int getErrorCode(){
             return errorCode;

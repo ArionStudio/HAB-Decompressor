@@ -81,6 +81,7 @@ public class Decompiler {
     public void makeHuffmanDictionary() {
         HuffmanTree huffmanTree = new  HuffmanTree(treeLayerArray);
         huffmanTree.printTree();
+        huffmanTree.printArrayTree();
         dictionary = new HuffmanDictionary(huffmanTree);
     }
 
