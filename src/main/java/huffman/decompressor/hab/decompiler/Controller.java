@@ -14,7 +14,7 @@ public class Controller {
             return;
         }
         try {
-            String fileName = "C:\\Users\\Adrian\\OneDrive - Politechnika Warszawska\\SEMEMESTR 2\\JIMP2\\Coder_Huffman_in_C\\KAPPA\\data\\" + getOpt.getOption("i");
+            String fileName = "C:\\Users\\cylwi\\OneDrive\\Pulpit\\" + getOpt.getOption("i");
             Decompiler decompiler = new Decompiler(fileName);
             decompiler.getBasicInfo();
             Log.println(decompiler.toString());

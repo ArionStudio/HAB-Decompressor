@@ -6,7 +6,7 @@ import printingTree.TreeNode;
 public class Main {
     public static void main(String[] args) {
         MainController.startGui();
-        TreeNode tree = new TreeNode(3);
+        TreeNode tree = new TreeNode(2);
         tree.printTree();
     }
 }
