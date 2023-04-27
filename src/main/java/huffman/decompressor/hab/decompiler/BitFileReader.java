@@ -10,11 +10,13 @@ public class BitFileReader {
     private static int unreadBits;
     private static FileInputStream file;
     private static DataInput byteFile;
+    private static long fileSize;
     private BitFileReader(String FileName) throws Exception {
         buffor = 0;
         unreadBits = 0;
         try {
             file = new FileInputStream(FileName);
+            fileSize = file.available();
             byteFile = new DataInputStream(file);
             fileName = FileName;
         } catch (FileNotFoundException e) {
@@ -38,6 +40,10 @@ public class BitFileReader {
         } catch (FileNotFoundException e) {
             throw new Exception(e);
         }
+    }
+
+    public static long getFileSize(){
+        return fileSize;
     }
 
     // Implementation of function 'readExactBits'

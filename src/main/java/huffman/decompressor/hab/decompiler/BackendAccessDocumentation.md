@@ -24,9 +24,9 @@ If argument have option you should always pass this next to it, or you get error
 
 ## List of arguments
 
-1. `-i`, `input-file` `[../file_patch]` - this param get info about __from__ which file we want to decompress
-2. `-o`, `output-file` `[../file_patch]` - this param get info about __to__ which file we want  decompress
-3. `-d`, `decryption-password` `[password]` - if we want to use decrypt function
+1. `-i` `[../file_patch]` - this param get info about __from__ which file we want to decompress
+2. `-o` `[../file_patch]` - this param get info about __to__ which file we want  decompress
+3. `-d` `[password]` - if we want to use decrypt function
 
 
 ## List of function

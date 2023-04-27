@@ -3,6 +3,8 @@ package huffman.decompressor.hab.decompiler;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Decompiler {
 
@@ -85,6 +87,11 @@ public class Decompiler {
         dictionary = new HuffmanDictionary(huffmanTree);
     }
 
+    public ArrayList<ArrayList<Short>> getHuffmanTreeAsArray(){
+        HuffmanTree huffmanTree = new  HuffmanTree(treeLayerArray);
+        return huffmanTree.makeFullArrayTree();
+    }
+
     public void decompressFile() throws Exception {
         StringBuilder decompressedFile = new StringBuilder();
         int array [] = {8, 8, 8, 1, 1, 8, 5, compressionLevel, compressionLevel - 1, compressionLevel, 3};
@@ -125,7 +132,15 @@ public class Decompiler {
         System.out.println(decompressedFile);
     }
 
+    public HashMap<String, Object> getBasicInfoAsMap(){
+        HashMap<String, Object> basicInfo = new HashMap<>();
+        basicInfo.put("compressed", compressionLevel);
+        basicInfo.put("encrypted", cryptedStatus);
+        basicInfo.put("size", BitFileReader.getFileSize());
+        basicInfo.put("estimated_time_in_secound", 0);
 
+        return basicInfo;
+    }
 
 
     private ArrayList<ArrayList<Short>> getSimpleDictionaryFromFile() throws Exception {

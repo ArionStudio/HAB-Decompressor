@@ -1,20 +1,20 @@
 package huffman.decompressor.hab.decompiler;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    public static void main(String[] args) {
-        GetOpt getOpt;
-        try{
-            getOpt = GetOpt.getInstance(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
-        }catch (GetOpt.OptExeption e){
-            if(e.getErrorCode() != 0){
-                Log.error(e.getMessage());
-            }
-            return;
+    private GetOpt getOpt;
+
+    public void main(String[] args) {
+        HashMap<String, Object> back = new HashMap<>();
+        try {
+            getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
+        } catch (GetOpt.OptExeption e) {
+            getOptExeptionMap(back, e);
         } catch (Exception e) {
-            return;
+            getExeptionMap(back, e);
         }
         try {
             String fileName = "C:\\Users\\cylwi\\OneDrive\\Pulpit\\" + getOpt.getOption("i");
@@ -31,22 +31,45 @@ public class Controller {
 
     }
 
-
-    public static Map<String, Object> getBasicFileData(String [] args){
-        GetOpt getOpt;
+    //TODO: MAKE ORDER WHITH CODES
+    public HashMap<String, Object> getBasicFileData(String[] args) {
         HashMap<String, Object> back = new HashMap<>();
-        try{
-            getOpt = GetOpt.getInstance(args, new String[]{}, new String[]{"i"});
-        }catch (GetOpt.OptExeption e){
-            HashMap<String, Object> error = new HashMap<>();
-            error.put("code", new I)
-            back.put("file_status", new Boolean(false));
+        try {
+            getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
+            Decompiler decompiler = new Decompiler(getOpt.getOption("i"));
+            decompiler.getBasicInfo();
+            HashMap<String, Object> file_info = decompiler.getBasicInfoAsMap();
+            back.put("file_status", true);
+            back.put("file_info", file_info);
 
-
-            error.put("file_status", );
+        } catch (GetOpt.OptExeption e) {
+            getOptExeptionMap(back, e);
         } catch (Exception e) {
-            HashMap<String, Object> error = new HashMap<>();
-            error.put("file_status", new Boolean(false));
+            getExeptionMap(back, e);
         }
+        return back;
+    }
+
+    private void getOptExeptionMap(HashMap<String, Object> back, GetOpt.OptExeption e) {
+        HashMap<String, Object> error = new HashMap<>();
+        error.put("code", e.getErrorCode());
+        error.put("message", e.getMessage());
+        back.put("file_status", Boolean.FALSE);
+        back.put("error", error);
+    }
+
+    private void getExeptionMap(HashMap<String, Object> back, Exception e) {
+        HashMap<String, Object> error = new HashMap<>();
+        error.put("code", 9);
+        error.put("message", e.getMessage());
+        back.put("file_status", Boolean.FALSE);
+        back.put("error", error);
+    }
+
+    public ArrayList<ArrayList<Short>> getHuffmanTreeAsArray(String[] args) throws Exception{
+        getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
+        Decompiler decompiler = new Decompiler(getOpt.getOption("i"));
+        decompiler.getBasicInfo();
+        return decompiler.getHuffmanTreeAsArray();
     }
 }

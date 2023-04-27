@@ -24,7 +24,7 @@ public class GetOpt {
         }
     }
 
-    private GetOpt(String [] all, String [] single, String [] multi) throws OptExeption {
+    public GetOpt(String [] all, String [] single, String [] multi) throws OptExeption {
         optArgs = all;
         singleArgs = new ArrayList<>(Arrays.asList(single));
         multiArgs = new ArrayList<>(Arrays.asList(multi));
@@ -76,32 +76,28 @@ public class GetOpt {
         }
     }
 
-    public static GetOpt getInstance(String [] optArgs, String [] singleArgs, String [] multiArgs) throws Exception {
-        if (instance == null) {
-            instance = new GetOpt(optArgs, singleArgs, multiArgs);
-        }
-        return instance;
-    }
 
-    public static boolean exist(String argName){
+    public boolean exist(String argName){
         return  existingArgs.contains(argName);
     }
 
-    public static String getOption(String argName){
+    public String getOption(String argName) throws OptExeption{
         if(existingArgs.contains(argName) && multiArgs.contains(argName)){
             for(int i = 0; i < optArgs.length; i++){
                 if(singleArgs.contains(optArgs[i])){
-                    return "";
+                    throw new OptExeption("This argument don't have option", 2);
                 }
                 if(optArgs[i].equals(argName)){
                     return optArgs[i + 1];
                 }
                 i++;
             }
-            return "";
+            throw new OptExeption("This argument doesn't exist", 1);
         }
-        return "";
+        throw new OptExeption("This argument doesn't exist", 1);
     }
+
+
 
     public static void printHelp(){
         System.out.println( "\n\n\nProgram usage instruction\n\n"
