@@ -25,7 +25,8 @@ public class GetOpt {
     }
 
     public GetOpt(String [] all, String [] single, String [] multi) throws OptExeption {
-        optArgs = all;
+        optArgs = new String[all.length];
+        System.arraycopy(all, 0, optArgs, 0, all.length);
         singleArgs = new ArrayList<>(Arrays.asList(single));
         multiArgs = new ArrayList<>(Arrays.asList(multi));
         existingArgs = new ArrayList<>();
@@ -44,10 +45,10 @@ public class GetOpt {
                     if(multiArgs.contains(optArgs[i + 1])){
                         throw new OptExeption("'Single' arguments can't have options", 2);
                     }else{
-                        existingArgs.add(optArgs[i].substring(1));
+                        existingArgs.add(optArgs[i]);
                     }
                 }else{
-                    existingArgs.add(optArgs[i].substring(1));
+                    existingArgs.add(optArgs[i]);
                 }
                 if(optArgs[i].equals("h")){
                     printHelp();
@@ -60,7 +61,7 @@ public class GetOpt {
                         if(optArgs[i + 1].charAt(0) == '-'){
                             throw new OptExeption("'Multiple' arguments options can't start with '-'", 3);
                         }else{
-                            existingArgs.add(optArgs[i].substring(1));
+                            existingArgs.add(optArgs[i]);
                             i++;
                         }
                     }else{
@@ -94,7 +95,7 @@ public class GetOpt {
             }
             throw new OptExeption("This argument doesn't exist", 1);
         }
-        throw new OptExeption("This argument doesn't exist", 1);
+        throw new OptExeption("This argument doesn't exist or doesn't have any option", 1);
     }
 
 

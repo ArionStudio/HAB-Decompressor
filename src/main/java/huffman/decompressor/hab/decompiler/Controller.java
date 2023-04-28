@@ -9,25 +9,25 @@ public class Controller {
 
     // It's only test function
     public static void main(String[] args) {
-//        HashMap<String, Object> back = new HashMap<>();
-//        try {
-//            getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
-//        } catch (GetOpt.OptExeption e) {
-//            getOptExeptionMap(back, e);
-//        } catch (Exception e) {
-//            getExeptionMap(back, e);
-//        }
-//        try {
-//            String fileName = "C:\\Users\\cylwi\\OneDrive\\Pulpit\\" + getOpt.getOption("i");
-//            Decompiler decompiler = new Decompiler(fileName);
-//            decompiler.getBasicInfo();
-//            Log.println(decompiler.toString());
-//            decompiler.makeHuffmanDictionary();
-//            decompiler.decompressFile();
-//        } catch (Exception e) {
-//            Log.error("File not found");
-//            Log.error(e.getMessage());
-//        }
+        HashMap<String, Object> back = new HashMap<>();
+        try {
+            getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
+        } catch (GetOpt.OptExeption e) {
+            getOptExeptionMap(back, e);
+        } catch (Exception e) {
+            getExeptionMap(back, e);
+        }
+        try {
+            String fileName = "C:\\Users\\Adrian\\OneDrive - Politechnika Warszawska\\SEMEMESTR 2\\JIMP2\\Coder_Huffman_in_C\\KAPPA\\data\\" + getOpt.getOption("i");
+            Decompiler decompiler = new Decompiler(fileName);
+            decompiler.getBasicInfo();
+            Log.println(decompiler.toString());
+            decompiler.makeHuffmanDictionary();
+            decompiler.decompressFile();
+        } catch (Exception e) {
+            Log.error("File not found");
+            Log.error(e.getMessage());
+        }
 
     }
 
