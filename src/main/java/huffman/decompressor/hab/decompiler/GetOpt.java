@@ -41,13 +41,13 @@ public class GetOpt {
             if(singleArgs.contains(optArgs[i])){
                 if(i + 1 != optArgs.length){
                     // single arg have option
-                    if(multiArgs.contains(optArgs[i +1 ])){
+                    if(multiArgs.contains(optArgs[i + 1])){
                         throw new OptExeption("'Single' arguments can't have options", 2);
                     }else{
-                        existingArgs.add(optArgs[i]);
+                        existingArgs.add(optArgs[i].substring(1));
                     }
                 }else{
-                    existingArgs.add(optArgs[i]);
+                    existingArgs.add(optArgs[i].substring(1));
                 }
                 if(optArgs[i].equals("h")){
                     printHelp();
@@ -60,7 +60,7 @@ public class GetOpt {
                         if(optArgs[i + 1].charAt(0) == '-'){
                             throw new OptExeption("'Multiple' arguments options can't start with '-'", 3);
                         }else{
-                            existingArgs.add(optArgs[i]);
+                            existingArgs.add(optArgs[i].substring(1));
                             i++;
                         }
                     }else{
