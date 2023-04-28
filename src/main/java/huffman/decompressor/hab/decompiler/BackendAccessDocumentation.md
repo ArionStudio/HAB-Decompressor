@@ -75,14 +75,14 @@ and everything above tell about level of compression \
 This function is to use after we are sure that file is great and don't have any errors. \
 If yes this function return nested `ArrayList` class of `Short`. 
 
-On start we have tree like this
-![tree_markings.png](resources%2Ftree_markings.png)
+On start, we have tree like this \
+<img src="./resources/tree_markings.png" alt="Real tree" width="600">
 
-Next we can save them like this in nested array
-![tree_save_idea.png](resources%2Ftree_save_idea.png)
+Next we can save them like this in nested array \
+<img src="./resources/tree_save_idea.png" alt="Real tree" width="600">
 
-For display porpouse we need to save some more info to recive binary tree
-![tree_save_real.png](resources%2Ftree_save_real.png)
+For display porpouse we need to save some more info to recive binary tree \
+<img src="./resources/tree_save_real.png" alt="Real tree" width="600">
 
 And this array contains huffman tree in array where we have each of layer and all needed node in it. \
 That means that we only have leafs, existing branches, root, \
