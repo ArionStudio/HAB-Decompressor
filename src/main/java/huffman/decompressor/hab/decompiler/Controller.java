@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Controller {
-    private GetOpt getOpt;
+    private static GetOpt getOpt;
 
     // It's only test function
     public static void main(String[] args) {
@@ -32,7 +32,7 @@ public class Controller {
     }
 
     //TODO: MAKE ORDER WHITH CODES
-    public HashMap<String, Object> getBasicFileData(String[] args) {
+    public static HashMap<String, Object> getBasicFileData(String[] args) {
         HashMap<String, Object> back = new HashMap<>();
         try {
             getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
@@ -51,7 +51,7 @@ public class Controller {
     }
 
 
-    private void getOptExeptionMap(HashMap<String, Object> back, GetOpt.OptExeption e) {
+    private static void getOptExeptionMap(HashMap<String, Object> back, GetOpt.OptExeption e) {
         HashMap<String, Object> error = new HashMap<>();
         error.put("code", e.getErrorCode());
         error.put("message", e.getMessage());
@@ -59,7 +59,7 @@ public class Controller {
         back.put("error", error);
     }
 
-    private void getExeptionMap(HashMap<String, Object> back, Exception e) {
+    private static void getExeptionMap(HashMap<String, Object> back, Exception e) {
         HashMap<String, Object> error = new HashMap<>();
         error.put("code", 9);
         error.put("message", e.getMessage());
@@ -67,7 +67,7 @@ public class Controller {
         back.put("error", error);
     }
 
-    public ArrayList<ArrayList<Short>> getHuffmanTreeAsArray(String[] args) throws Exception {
+    public static ArrayList<ArrayList<Short>> getHuffmanTreeAsArray(String[] args) throws Exception {
         getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
         Decompiler decompiler = new Decompiler(getOpt.getOption("i"));
         decompiler.getBasicInfo();
