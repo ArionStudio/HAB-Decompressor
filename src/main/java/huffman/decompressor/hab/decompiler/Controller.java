@@ -12,6 +12,7 @@ public class Controller {
         HashMap<String, Object> back = new HashMap<>();
         try {
             getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
+            getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
         } catch (GetOpt.OptExeption e) {
             getOptExeptionMap(back, e);
         } catch (Exception e) {
@@ -19,11 +20,9 @@ public class Controller {
         }
         try {
             String fileName = "C:\\Users\\Adrian\\OneDrive - Politechnika Warszawska\\SEMEMESTR 2\\JIMP2\\Coder_Huffman_in_C\\KAPPA\\data\\" + getOpt.getOption("i");
-            Decompiler decompiler = new Decompiler(fileName);
-            decompiler.getBasicInfo();
-            Log.println(decompiler.toString());
-            decompiler.makeHuffmanDictionary();
-            decompiler.decompressFile();
+
+            getBasicFileData(new String[]{"-i", fileName});
+            getHuffmanTreeAsArray(new String[]{"-i", fileName});
         } catch (Exception e) {
             Log.error("File not found");
             Log.error(e.getMessage());

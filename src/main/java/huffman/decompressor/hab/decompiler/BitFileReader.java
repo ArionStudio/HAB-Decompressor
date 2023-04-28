@@ -24,11 +24,8 @@ public class BitFileReader {
         }
     }
 
-    public static BitFileReader getInstance(String FileName) throws Exception {
-        if (instance == null) {
-            instance = new BitFileReader(FileName);
-        }
-        return instance;
+    public static void getInstance(String FileName) throws Exception {
+        instance = new BitFileReader(FileName);
     }
 
     public static void resetReader() throws Exception {
