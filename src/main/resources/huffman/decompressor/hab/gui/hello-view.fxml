@@ -11,7 +11,7 @@
     </padding>
     <Button onAction="#onHelloButtonClick" text="Hello" />
     <Button onAction="#openFileExplorer" text="FindTheFIle" />
-    <Button onAction="#changingScreens" text="ChangingScreen" />
+    <Button onAction="#changingScreens" text="GetParameters" />
 
     <Label fx:id="welcomeText" />
 </VBox>

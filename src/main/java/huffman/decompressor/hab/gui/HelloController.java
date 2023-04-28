@@ -25,10 +25,26 @@ public class HelloController implements Initializable {
     @FXML
     private Button fileExplorer;
     @FXML
+    private Button toDecompress;
+    @FXML
     private Label welcomeText;
 
     @FXML
     private Label noText;
+
+    @FXML
+    private Label errorMessage;
+    @FXML
+    private Label errorCode;
+    @FXML
+    private Label compressed;
+    @FXML
+    private Label encrypted;
+    @FXML
+    private Label fileSize;
+    @FXML
+    private Label outfile;
+
 
     @FXML
     protected void onHelloButtonClick() {
@@ -50,12 +66,29 @@ public class HelloController implements Initializable {
         }
     }
     @FXML
+    protected void fileWhereWillBeDecompressed() {
+        File file = fileChooser.showOpenDialog(null);
+        if(file != null) {
+            outfile.setText("Outfile: "+ file.toString());
+        }
+        else{
+            //status = funkcja adiego z arguemntami -file -i -basic
+            welcomeText.setText("You didn't choose any file!" );
+        }
+    }
+    @FXML
     protected void nobasek() throws IOException {
         welcomeText.setText("Zly plik!");
+        errorMessage.setText("Error message: "+"Głupiś ty");
+        errorCode.setText("Error code: "+777);
     }
     @FXML
     protected void sukces() throws IOException {
         welcomeText.setText("Dobry plik!");
+        compressed.setText("Compressed: "+"True" );
+        encrypted.setText("Encrypted: "+"True" );
+        fileSize.setText("File Size: "+"DUZOOOO "+"MG");
+        toDecompress.setDisable(false);
     }
 
     private Stage stage;
@@ -63,7 +96,7 @@ public class HelloController implements Initializable {
     private Parent parent;
     @FXML
     public void changingScreens(ActionEvent e) throws IOException {
-        int f = 0;
+        int f = 1;
         if(f == 0){
             switchToScene2(e);
             //setCompressedInfo();
