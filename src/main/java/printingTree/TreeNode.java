@@ -4,24 +4,59 @@ import java.util.ArrayList;
 
 public class TreeNode {
     private int maxDepth;
-    private ArrayList<Integer> tempValuesOfTree;
-    public int[] tab = {-1, 14142, -1, -2, -2, 145, 6542,};   // 5  5  5      15  5  15
+    private ArrayList<Short> tempValuesOfTree;
+    private ArrayList<ArrayList<Short>> forik= new ArrayList<>();
 
-    public TreeNode(int max) {
+    public TreeNode(int max, ArrayList<ArrayList<Short>> forik) {
         this.maxDepth = max;
+        //this.forik.addAll(forik);
         tempValuesOfTree = new ArrayList<>();
+        ArrayList<Short> a = new ArrayList<>();
+        ArrayList<Short> b = new ArrayList<>();
+        ArrayList<Short> c = new ArrayList<>();
+        ArrayList<Short> d = new ArrayList<>();
+
+        a.add((short) -1);
+        a.add((short) 0);
+
+        b.add((short) -1);
+        b.add((short) -1);
+        b.add((short) 0);
+
+        c.add((short) -1);
+        c.add((short) 3);
+        c.add((short) 7);
+        c.add((short) 10);
+        c.add((short) 0);
+
+        d.add((short) 1);
+        d.add((short) 0);
+        d.add((short) 6);
+
+        this.forik.add(a);
+        this.forik.add(b);
+        this.forik.add(c);
+        this.forik.add(d);
+
+        System.out.println(forik);
 
     }
 
     public void printTree() {
         if (maxDepth == 0) {
-            System.out.println(tab[0]);
+            System.out.println(forik.get(0).get(0));
         } else {
             int width = 5;
             int leftWidth = 5, middleWidth = 5;
             int iterate = 1;
             int iterateByArray = 0;
-            int amountOfArray = tab.length;
+            int simpleArrayListFounder =0;
+            int amountOfArray = 0;//tab.length;
+            int lengthOfArrayOfArrays = forik.size();
+            for(int i = maxDepth; i>=0;i--){
+                amountOfArray += java.lang.Math.pow(2, i);
+            }
+
             int currentLayer = 0;
             int upperIterator = 5;
             int odds = 0;
@@ -46,6 +81,11 @@ public class TreeNode {
                 int iterateByShortWidth = 5;
                 boolean k = false;
                 int count = 0;
+
+                if(simpleArrayListFounder < lengthOfArrayOfArrays)
+                    tempValuesOfTree.addAll(forik.get(simpleArrayListFounder));
+
+                int smth = tempValuesOfTree.size();
                 for (int j = 0; j < iterate; j++) {
                     if (k == false) {
                         for (int i = 0; i < leftWidth - odds; i++) {
@@ -53,25 +93,27 @@ public class TreeNode {
                         }
                         k = true;
                     }
-                    tempValuesOfTree.add(tab[iterateByArray]);
-                    if (tab[iterateByArray] > 0) {
-                        if ((tab[iterateByArray] < 10) && (tab[iterateByArray] >= 0)) {
-                            System.out.print("  " + tab[iterateByArray] + "  ");
-                        } else if ((tab[iterateByArray] < 100) && (tab[iterateByArray] >= 10)) {
-                            System.out.print(" " + tab[iterateByArray] + "  ");
-                        } else if ((tab[iterateByArray] < 1000) && (tab[iterateByArray] >= 100)) {
-                            System.out.print(" " + tab[iterateByArray] + " ");
-                        } else if ((tab[iterateByArray] < 10000) && (tab[iterateByArray] >= 1000)) {
-                            System.out.print(" " + tab[iterateByArray]);
-                        } else if ((tab[iterateByArray] <= 65535) && (tab[iterateByArray] >= 10000)) {
-                            System.out.print(tab[iterateByArray]);
+                    //tempValuesOfTree.add(tab[iterateByArray]);
+                    if(j < smth-1 ) {
+                        if (tempValuesOfTree.get(j) >= 0) {
+                            if ((tempValuesOfTree.get(j) < 10) && (tempValuesOfTree.get(j) >= 0)) {
+                                System.out.print("  " + tempValuesOfTree.get(j) + "  ");
+                            } else if ((tempValuesOfTree.get(j) < 100) && (tempValuesOfTree.get(j) >= 10)) {
+                                System.out.print(" " + tempValuesOfTree.get(j) + "  ");
+                            } else if ((tempValuesOfTree.get(j) < 1000) && (tempValuesOfTree.get(j) >= 100)) {
+                                System.out.print(" " + tempValuesOfTree.get(j) + " ");
+                            } else if ((tempValuesOfTree.get(j) < 10000) && (tempValuesOfTree.get(j) >= 1000)) {
+                                System.out.print(" " + tempValuesOfTree.get(j));
+                            } else if ((tempValuesOfTree.get(j) <= 65535) && (tempValuesOfTree.get(j) >= 10000)) {
+                                System.out.print(tempValuesOfTree.get(j));
+                            }
+                        } else {
+                            if (tempValuesOfTree.get(j) == -1) {
+                                System.out.print("[   ]");
+                            }
                         }
-                    } else {
-                        if (tab[iterateByArray] == -1) {
-                            System.out.print("[   ]");
-                        } else if (tab[iterateByArray] == -2) {
-                            System.out.print("     ");
-                        }
+                    }else{
+                        System.out.print("     ");
                     }
                     for (int i = 0; i < /*middleWidth*/tabOfMiddleValuesWidths[it + count]; i++) {
                         System.out.print(" ");
@@ -106,21 +148,28 @@ public class TreeNode {
                             }
                             l = true;
                         }
-
-                        if (tempValuesOfTree.get(j) >= 0) {
+                        if(j < smth-1 ) {
+                            if (tempValuesOfTree.get(j) >= 0) {
+                                System.out.print(" ");
+                            } else {
+                                System.out.print("/");
+                            }
+                        }else{
                             System.out.print(" ");
-                        } else {
-                            System.out.print("/");
                         }
 
                         for (int i = 0; i < iterateByShortWidth; i++) {
                             System.out.print(" ");
                         }
 
-                        if (tempValuesOfTree.get(j) >= 0) {
+                        if(j < smth-1 ) {
+                            if (tempValuesOfTree.get(j) >= 0) {
+                                System.out.print(" ");
+                            } else {
+                                System.out.print("\\");
+                            }
+                        }else{
                             System.out.print(" ");
-                        } else {
-                            System.out.print("\\");
                         }
 
                         for (int i = 0; i < /*bylo middleWidth*/ upperIterator; i++) {
@@ -150,6 +199,7 @@ public class TreeNode {
                 odds = 3;
                 upperIterator = iterateByShortWidth;
                 jtw++;
+                simpleArrayListFounder++;
 
             }
 
