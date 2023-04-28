@@ -75,18 +75,28 @@ and everything above tell about level of compression \
 This function is to use after we are sure that file is great and don't have any errors. \
 If yes this function return nested `ArrayList` class of `Short`. 
 
+On start we have tree like this
+![tree_markings.png](resources%2Ftree_markings.png)
+
+Next we can save them like this in nested array
+![tree_save_idea.png](resources%2Ftree_save_idea.png)
+
+For display porpouse we need to save some more info to recive binary tree
+![tree_save_real.png](resources%2Ftree_save_real.png)
+
 And this array contains huffman tree in array where we have each of layer and all needed node in it. \
 That means that we only have leafs, existing branches, root, \
 and on the end of all layer have number of node to have full binary tree 
 
 Array start from root and end on deephest layer.
 
-| Type of node | Value [Short]                           |
-|--------------|-----------------------------------------|
-| root         | -1                                      |
-| branch       | -1                                      |
-| leaf         | their code from 0 to 2^compressed level |
-| last node    | number of node to get binary tree       | 
+So we can say is like this:
 
-**Warning** last node in real is equal to `(x + 2) * (-1)` of itself
+| Type of node       | Value [Short]                           |
+|--------------------|-----------------------------------------|
+| root               | -1                                      |
+| branch             | -1                                      |
+| leaf               | their code from 0 to 2^compressed level |
+| last node on layer | number of node to get binary tree       | 
+
 

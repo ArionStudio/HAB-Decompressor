@@ -86,7 +86,7 @@ public class HuffmanTree {
                 fullArrayTree.get(i).add(huffmanArray.get(huffmanSize).get(j).code);
                 j++;
             }
-            fullArrayTree.get(i).add((short) - (Math.pow(2, i) - huffmanArray.get(huffmanSize).size() + 2));
+            fullArrayTree.get(i).add((short) (Math.pow(2, i) - huffmanArray.get(huffmanSize).size()));
             huffmanSize++;
         }
         return fullArrayTree;
