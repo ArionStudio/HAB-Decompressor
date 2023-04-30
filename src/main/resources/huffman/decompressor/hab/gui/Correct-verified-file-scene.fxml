@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="412.0" prefWidth="716.0" spacing="20.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="huffman.decompressor.hab.gui.HelloController">
+<VBox alignment="CENTER" prefHeight="412.0" prefWidth="716.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="huffman.decompressor.hab.gui.HelloController">
 <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
 </padding>
@@ -18,8 +18,8 @@
    <Pane prefHeight="186.0" prefWidth="676.0">
       <children>
          <Label fx:id="noText" layoutX="14.0" layoutY="54.0" />
-      <Button layoutX="14.0" layoutY="122.0" onAction="#sukces" text="Show Info" />
-         <Button fx:id="toDecompress" layoutX="574.0" layoutY="122.0" mnemonicParsing="false" text="Decompress" />
+         <Button fx:id="toDecompress" layoutX="574.0" layoutY="122.0" mnemonicParsing="false" onAction="#switchToFinalScene" text="Decompress" />
+         <Button layoutX="14.0" layoutY="122.0" onAction="#sukces" text="Show Info" />
          <Button layoutX="574.0" layoutY="20.0" mnemonicParsing="false" onAction="#fileWhereWillBeDecompressed" text="FindFIle" />
          <Label fx:id="outfile" layoutY="24.0" prefHeight="17.0" prefWidth="554.0" text="Outfile: " />
       </children>
