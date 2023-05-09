@@ -5,6 +5,7 @@ module huffman.decompressor.hab {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
+    requires java.desktop;
 
     opens huffman.decompressor.hab to javafx.fxml;
     exports huffman.decompressor.hab;
