@@ -24,6 +24,18 @@ public class BitFileWriter {
         return instance;
     }
 
+    public static long getFileSize(){
+        try{
+            file.close();
+            FileInputStream inFile = new FileInputStream(fileName);
+            return inFile.available();
+        }catch (FileNotFoundException e){
+            return 0;
+        }catch (IOException IOe){
+            return 0;
+        }
+    }
+
     public static void writeExactBits(int bits, long data) throws IOException {
         data <<= 64 - (unwriteBits + bits);
         buffor += data;

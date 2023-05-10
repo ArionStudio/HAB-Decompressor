@@ -16,7 +16,7 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
     <Label fx:id="welcomeText" text="HAB Decompressor" styleClass="main-title" prefHeight="20.0"/>
-    <VBox alignment="CENTER" prefWidth="1340" prefHeight="720" spacing="20.0">
+    <VBox alignment="CENTER" prefWidth="1360" prefHeight="700" spacing="20.0">
         <VBox   alignment="CENTER" prefWidth="440">
             <Label fx:id="error" alignment="TOP_LEFT" prefHeight="20.0" prefWidth="260.0" text="ERROR!"/>
             <Label fx:id="errorCode" prefHeight="18.0" prefWidth="260.0" text="Error code: " />

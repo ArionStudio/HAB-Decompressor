@@ -58,34 +58,21 @@ public class HelloController implements Initializable {
     }
 
     @FXML
-    protected void openFileExplorer() {
-        File file = fileChooser.showOpenDialog(null);
-        if(file != null) {
-            welcomeText.setText("The file you want to decompress: " + file.toString());
-            Controller.getBasicFileData(new String[]{"-i", file.toString()});
-        }
-        else{
-            //status = funkcja adiego z arguemntami -file -i -basic
-            welcomeText.setText("You didn't choose any file!" );
-        }
-    }
-
-    @FXML
     protected void getFileDataAndGoToScene(ActionEvent e) throws IOException {
         File file = fileChooser.showOpenDialog(null);
         if(file != null) {
-            filePath = file.getPath();
+            filePath = file.getAbsolutePath();
             Map<String, Object> map = Controller.getBasicFileData(new String[]{"-i", filePath});
             if(((Boolean) map.get("file_status"))){
                 switchToInfoScene(e, (Map<String, Object>)map.get("file_info"));
             }else{
-                switchToInfoScene(e, (Map<String, Object>)map.get("error"));
+                switchToErrorScene(e, (HashMap<String, Object>)map.get("error"));
             }
         }
         else{
             HashMap<String, Object> error = new HashMap<>();
             error.put("code", 1);
-            error.put("message", "File not found");
+            error.put("message", "File not choose");
             switchToErrorScene(e, error);
         }
     }
@@ -96,6 +83,7 @@ public class HelloController implements Initializable {
         Parent parent = loader.load();
         GetInfoSceneController controller = loader.getController();
         controller.setFileInfo(fileInfo);
+
 
         Stage stage = (Stage) ((Node) e.getSource()).getScene().getWindow();
         Scene scene = new Scene(parent);

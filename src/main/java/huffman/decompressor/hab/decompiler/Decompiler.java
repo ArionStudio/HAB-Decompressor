@@ -90,6 +90,7 @@ public class Decompiler {
 
     public ArrayList<ArrayList<Short>> getHuffmanTreeAsArray(){
         HuffmanTree huffmanTree = new  HuffmanTree(treeLayerArray);
+        System.err.println(twoDemensionArrayToString(huffmanTree.makeFullArrayTree()));
         return huffmanTree.makeFullArrayTree();
     }
 
@@ -118,6 +119,7 @@ public class Decompiler {
             while(BitFileReader.byteToEnd() > 0 || BitFileReader.getUnreadBits() > originUsslessBits ){
                 short code = dictionary.findInDictionary(password);
                 if(code != -1){
+                    System.out.println(code);
                     BitFileWriter.writeExactBits(compressionLevel, code);
 //                    decompressedFile.append((char)code);
                 }else{
@@ -187,7 +189,7 @@ public class Decompiler {
                 "\n}";
     }
 
-    private String twoDemensionArrayToString(ArrayList<ArrayList<Short>> treeLayerArray) {
+    String twoDemensionArrayToString(ArrayList<ArrayList<Short>> treeLayerArray) {
         StringBuilder result = new StringBuilder("\t[\n");
         treeLayerArray.forEach(array -> {
             result.append("\t\t[ ");

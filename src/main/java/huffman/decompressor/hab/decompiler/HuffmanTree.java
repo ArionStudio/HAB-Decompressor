@@ -80,7 +80,6 @@ public class HuffmanTree {
         }
         int huffmanSize = 0;
         for (int i = huffmanArray.size() - 1; i >= 0; i--) {
-            fullArrayTree.add(new ArrayList<>());
             int j = 0;
             while (j < huffmanArray.get(huffmanSize).size()){
                 fullArrayTree.get(i).add(huffmanArray.get(huffmanSize).get(j).code);

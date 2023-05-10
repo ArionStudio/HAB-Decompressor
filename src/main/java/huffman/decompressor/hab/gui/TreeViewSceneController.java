@@ -1,9 +1,12 @@
 package huffman.decompressor.hab.gui;
 
+import huffman.decompressor.hab.decompiler.Controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
@@ -16,8 +19,13 @@ import printingTree.TreeNode;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Objects;
 
 public class TreeViewSceneController {
+    public Label action_time;
+    public Label new_file_size;
+    public Label new_file_path;
     @FXML
     private Pane paneT;
     private Scene sceneTT;
@@ -27,19 +35,13 @@ public class TreeViewSceneController {
     DragabbleM dragabble2 = new DragabbleM();
 
     DragabbleM dragabble = new DragabbleM();
+    private String in_file_path;
 
 
     public void switchToTreeView(ActionEvent e) throws IOException {
 
         Stage stageT = (Stage) ((Node) e.getSource()).getScene().getWindow();
-
-
-
-        // Button button = new Button("Button");
-
         paneT = new Pane();
-        //paneT.getChildren().add(button);
-
 
         BorderPane borderPanT = new BorderPane();
 
@@ -47,24 +49,39 @@ public class TreeViewSceneController {
         scrollPaneT = new ScrollPane();
         scrollPaneT.setContent(paneT);
         borderPanT.setCenter(scrollPaneT);
-
-        Label label = new Label(draw());
-        //label.setLayoutX(400);
-        //label.setLayoutY(20);
-
-
-        //dragabble2.makeitdrag(paneT,1);
-        paneT.getChildren().add(label);
-        //dragabble2.makeitdrag(paneT,1);
-        dragabble.makeitdrag(label,1);
-
-
-        Scene scene = new Scene(borderPanT, 640, 640);
-        this.zoom(paneT,label);
-        stageT.setScene(scene);
-        stageT.show();
+        String treeInString = draw();
+        if(Objects.equals(treeInString, "")){
+            HashMap<String, Object> error = new HashMap<>();
+            error.put("code", 10);
+            error.put("message", "Array not created");
+            switchToErrorScene(e, error);
+        }else{
+            Label label = new Label(treeInString);
+            //label.setLayoutX(400);
+            //label.setLayoutY(20);
 
 
+            //dragabble2.makeitdrag(paneT,1);
+            paneT.getChildren().add(label);
+            //dragabble2.makeitdrag(paneT,1);
+            dragabble.makeitdrag(label,1);
+
+
+            Scene scene = new Scene(borderPanT, 640, 640);
+            this.zoom(paneT,label);
+            stageT.setScene(scene);
+            stageT.show();
+        }
+
+
+
+    }
+
+    public void setDecompressedFileInfo(HashMap<String, Object> decompressedFileInfo) {
+        new_file_path.setText("Action time: " + decompressedFileInfo.get("out_file_path"));
+        new_file_size.setText("New file size: " + decompressedFileInfo.get("decompressed_file_size"));
+        action_time.setText("New file path: " + decompressedFileInfo.get("decompress_time"));
+        in_file_path = (String) decompressedFileInfo.get("in_file_path");
     }
 
     private class DragabbleM{
@@ -115,12 +132,31 @@ public class TreeViewSceneController {
     }
     @FXML
     protected String draw() {
-        ArrayList<ArrayList<Short>> simpleTree = new ArrayList<>();
-        TreeNode tree = new TreeNode(3,simpleTree);
-        tree.printTree();
-        //ShowTree.setText(tree.getTree());
-        return(tree.getTree());
+        try{
+            ArrayList<ArrayList<Short>> simpleTree = Controller.getHuffmanTreeAsArray(new String[]{"-i", in_file_path});
+            System.out.println(simpleTree);
+            TreeNode tree = new TreeNode(simpleTree.size()-1,simpleTree);
+            tree.printTree();
+            //ShowTree.setText(tree.getTree());
+            return(tree.getTree());
+            //return "";
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+            return "";
+        }
         //System.out.println(tree.getTree());
         //return("lol");
+    }
+
+    public void switchToErrorScene(ActionEvent e, HashMap<String, Object> error) throws IOException {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("Error-scene.fxml"));
+        Parent parent = loader.load();
+        ErrorSceneController controller = loader.getController();
+        controller.setError(error);
+
+        Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+        Scene scene = new Scene(parent);
+        stage.setScene(scene);
+        stage.show();
     }
 }

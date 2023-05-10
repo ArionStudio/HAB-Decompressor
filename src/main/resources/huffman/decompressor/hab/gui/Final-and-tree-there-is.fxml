@@ -18,11 +18,10 @@
    <children>
       <Pane prefHeight="322.0" prefWidth="338.0">
          <children>
-            <Label layoutX="14.0" layoutY="14.0" text="ActionTIme" />
-            <Label layoutX="12.0" layoutY="39.0" text="NewFIleSIze" />
-            <Label layoutX="11.0" layoutY="66.0" text="NewFIlePath" />
+            <Label fx:id="action_time" layoutX="14.0" layoutY="14.0" text="Action time: " />
+            <Label fx:id="new_file_size" layoutX="12.0" layoutY="39.0" text="New file size: " />
+            <Label fx:id="new_file_path" layoutX="11.0" layoutY="66.0" text="New file path: " />
             <Button layoutX="133.0" layoutY="214.0" mnemonicParsing="false" text="WatchTree" onAction="#switchToTreeView"/>
-            <Button layoutX="272.0" layoutY="62.0" mnemonicParsing="false" text="OpenFIle" />
          </children>
       </Pane>
    </children>

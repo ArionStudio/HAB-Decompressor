@@ -73,16 +73,36 @@ public class Controller {
         getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
         Decompiler decompiler = new Decompiler(getOpt.getOption("i"), "");
         decompiler.getBasicInfo();
-        return decompiler.getHuffmanTreeAsArray();
+        ArrayList<ArrayList<Short>> arrayLists = decompiler.getHuffmanTreeAsArray();
+
+        System.out.println("TEST ");
+        decompiler.twoDemensionArrayToString(arrayLists);
+        return arrayLists;
     }
 
-    public static void decompressFile(String [] args) throws Exception {
+    public static HashMap<String, Object> decompressFile(String [] args) throws Exception {
         getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
-        String password = getOpt.getOption("d");
+        String password = "";
+        if(getOpt.exist("d")){
+            password = getOpt.getOption("d");
+        }
         String inFilePath = getOpt.getOption("i");
-        String outFilePath = getOpt.getOption("o");
+        String outFilePath = "result.txt";
+        if(getOpt.exist("o")){
+            outFilePath = getOpt.getOption("o");
+        }
         Decompiler decompiler = new Decompiler(inFilePath, password);
         decompiler.getBasicInfo();
+
+        long startTime = System.currentTimeMillis();
         decompiler.decompressFile(outFilePath);
+        long decompressTime = System.currentTimeMillis() - startTime;
+
+        HashMap<String, Object> decompressedFileInfo = new HashMap<>();
+        decompressedFileInfo.put("decompressed_file_size", BitFileWriter.getFileSize());
+        decompressedFileInfo.put("decompress_time", decompressTime);
+        decompressedFileInfo.put("out_file_path", outFilePath);
+
+        return decompressedFileInfo;
     }
 }
