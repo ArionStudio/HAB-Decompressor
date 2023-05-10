@@ -67,6 +67,39 @@ public class BitFileReader {
         return (int) result;
     }
 
+    public static short decrypt(byte  text, String password){
+        short result = text;
+        for (int i = 0; i < password.length(); i++) {
+            result ^= (byte) password.charAt(i);
+        }
+        if(result < 0){
+            result += 256;
+        }
+        return result;
+    }
+
+
+    public static int readNBitsWithPassword(int n, String password) throws IOException {
+        while(unreadBits < n){
+            long a = 0;
+            if(n - unreadBits < 8){
+                a = (long) byteFile.readUnsignedByte();
+                a = (long) decrypt((byte)a, password);
+                unreadBits += 8;
+            }
+            a <<= 32 - unreadBits;
+            buffor += a;
+        }
+        // Read
+        long result = buffor;
+        result >>>= 32 - n;
+        unreadBits -= n;
+        buffor <<= n;
+        buffor &= 0xfFFFFFFFL;
+
+        return (int) result;
+    }
+
     public static String toBiteString(long x, int bites){
         StringBuilder bitesString = new StringBuilder();
         int j = 0;

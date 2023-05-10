@@ -12,17 +12,20 @@ public class Controller {
         HashMap<String, Object> back = new HashMap<>();
         try {
             getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
-            getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
         } catch (GetOpt.OptExeption e) {
             getOptExeptionMap(back, e);
         } catch (Exception e) {
             getExeptionMap(back, e);
         }
         try {
-            String fileName = "C:\\Users\\Adrian\\OneDrive - Politechnika Warszawska\\SEMEMESTR 2\\JIMP2\\Coder_Huffman_in_C\\KAPPA\\data\\" + getOpt.getOption("i");
+            String fileName = getOpt.getOption("i");
+            String inFilePath = "C:\\Users\\Adrian\\OneDrive - Politechnika Warszawska\\SEMEMESTR 2\\JIMP2\\Coder_Huffman_in_C\\KAPPA\\data\\" + fileName;
+            String password = getOpt.getOption("d");
+            String outFilePath = getOpt.getOption("o");
 
-            getBasicFileData(new String[]{"-i", fileName});
-            getHuffmanTreeAsArray(new String[]{"-i", fileName});
+//            getBasicFileData(new String[]{"-i", filePath});
+            decompressFile(new String[]{"-i", inFilePath, "-d", password, "-o", outFilePath});
+
         } catch (Exception e) {
             Log.error("File not found");
             Log.error(e.getMessage());
@@ -35,7 +38,7 @@ public class Controller {
         HashMap<String, Object> back = new HashMap<>();
         try {
             getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
-            Decompiler decompiler = new Decompiler(getOpt.getOption("i"));
+            Decompiler decompiler = new Decompiler(getOpt.getOption("i"), "");
             decompiler.getBasicInfo();
             HashMap<String, Object> file_info = decompiler.getBasicInfoAsMap();
             back.put("file_status", true);
@@ -68,8 +71,18 @@ public class Controller {
 
     public static ArrayList<ArrayList<Short>> getHuffmanTreeAsArray(String[] args) throws Exception {
         getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
-        Decompiler decompiler = new Decompiler(getOpt.getOption("i"));
+        Decompiler decompiler = new Decompiler(getOpt.getOption("i"), "");
         decompiler.getBasicInfo();
         return decompiler.getHuffmanTreeAsArray();
+    }
+
+    public static void decompressFile(String [] args) throws Exception {
+        getOpt = new GetOpt(args, new String[]{"h", "m"}, new String[]{"i", "o", "d"});
+        String password = getOpt.getOption("d");
+        String inFilePath = getOpt.getOption("i");
+        String outFilePath = getOpt.getOption("o");
+        Decompiler decompiler = new Decompiler(inFilePath, password);
+        decompiler.getBasicInfo();
+        decompiler.decompressFile(outFilePath);
     }
 }

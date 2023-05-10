@@ -9,16 +9,12 @@ public class BitFileWriter {
     private static int unwriteBits;
     private static FileOutputStream file;
     private static DataOutput byteFile;
-    private BitFileWriter(String FileName) throws Exception {
+    private BitFileWriter(String FileName) throws FileNotFoundException {
         buffor = 0;
         unwriteBits = 0;
-        try {
-            file = new FileOutputStream(FileName);
-            byteFile = new DataOutputStream(file);
-            fileName = FileName;
-        } catch (FileNotFoundException e) {
-            throw new Exception(e);
-        }
+        file = new FileOutputStream(FileName);
+        byteFile = new DataOutputStream(file);
+        fileName = FileName;
     }
 
     public static BitFileWriter getInstance(String FileName) throws Exception {
@@ -28,16 +24,6 @@ public class BitFileWriter {
         return instance;
     }
 
-    public static void resetWriter() throws Exception {
-        buffor = 0;
-        unwriteBits = 0;
-        try {
-            file = new FileOutputStream(fileName);
-            byteFile = new DataOutputStream(file);
-        } catch (FileNotFoundException e) {
-            throw new Exception(e);
-        }
-    }
     public static void writeExactBits(int bits, long data) throws IOException {
         data <<= 64 - (unwriteBits + bits);
         buffor += data;

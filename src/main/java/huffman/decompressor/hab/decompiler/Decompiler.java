@@ -27,10 +27,10 @@ public class Decompiler {
     private static final short CRC_CODE = (short) 252;
     private String password;
 
-    public Decompiler(String inputFileName) throws Exception {
+    public Decompiler(String inputFileName, String password) throws Exception {
         this.inputFileName = inputFileName;
         BitFileReader.getInstance(inputFileName);
-        password = "";
+        this.password = password;
         outputFileName = "";
         treeLayerArray = new ArrayList<>();
     }
@@ -44,6 +44,7 @@ public class Decompiler {
     }
 
     public void getBasicInfo() throws Exception {
+        BitFileReader.resetReader();
         int iterator = 0;
         try{
             StringBuilder text = new StringBuilder();
@@ -92,7 +93,7 @@ public class Decompiler {
         return huffmanTree.makeFullArrayTree();
     }
 
-    public void decompressFile() throws Exception {
+    public void decompressFile(String outFilePath) throws Exception {
         StringBuilder decompressedFile = new StringBuilder();
         int array [] = {8, 8, 8, 1, 1, 8, 5, compressionLevel, compressionLevel - 1, compressionLevel, 3};
         BitFileReader.resetReader();
@@ -109,25 +110,28 @@ public class Decompiler {
             }
         }
 
-        Log.println("Unread: " + BitFileReader.getUnreadBits());
-
-        Log.println("Unread: " + BitFileReader.getBuffor());
         BitFileReader.readUnreadBits();
 
-        Log.println("Unread: " + BitFileReader.getUnreadBits());
-        Log.println("Unread: " + BitFileReader.getBuffor());
+        BitFileWriter.getInstance(outFilePath);
 
-        while(BitFileReader.byteToEnd() > 0 || BitFileReader.getUnreadBits() > originUsslessBits ){
-            short code = dictionary.findInDictionary();
-            if(code != -1){
-                decompressedFile.append((char)code);
-            }else{
-                if(BitFileReader.byteToEnd() <= originUsslessBits){
-                    Log.println("File decompressed");
+        try{
+            while(BitFileReader.byteToEnd() > 0 || BitFileReader.getUnreadBits() > originUsslessBits ){
+                short code = dictionary.findInDictionary(password);
+                if(code != -1){
+                    BitFileWriter.writeExactBits(compressionLevel, code);
+//                    decompressedFile.append((char)code);
                 }else{
-                    Log.error("when decompress file");
+                    if(BitFileReader.byteToEnd() <= originUsslessBits){
+                        Log.println("File decompressed");
+                    }else{
+                        Log.error("when decompress file");
+                    }
                 }
             }
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
         System.out.println(decompressedFile);
     }
@@ -138,6 +142,7 @@ public class Decompiler {
         basicInfo.put("encrypted", cryptedStatus);
         basicInfo.put("size", BitFileReader.getFileSize());
         basicInfo.put("estimated_time_in_secound", 0);
+        basicInfo.put("file_path", inputFileName);
 
         return basicInfo;
     }

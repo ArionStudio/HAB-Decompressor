@@ -1,0 +1,11 @@
+Label{
+    /*-fx-background-color: red;*/
+}
+
+.main{
+    display: flex;
+}
+
+.main-title{
+    -fx-font-size: 32px;
+}

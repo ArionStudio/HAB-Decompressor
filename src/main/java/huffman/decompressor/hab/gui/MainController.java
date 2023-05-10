@@ -16,7 +16,7 @@ public class MainController extends Application {
         stage = primaryStage;
         FXMLLoader fxmlLoader = new FXMLLoader(MainController.class.getResource("hello-view.fxml"));
         Scene scenePrimary = new Scene(fxmlLoader.load(), 1360, 720);
-        primaryStage.setTitle("Hello!");
+        primaryStage.setTitle("HAB Decompressor");
 
         primaryStage.setScene(scenePrimary);
         primaryStage.show();

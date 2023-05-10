@@ -43,7 +43,7 @@ public class HuffmanDictionary {
         }
     }
 
-    public short findInDictionary() throws Exception {
+    public short findInDictionary(String password) throws Exception {
         ArrayList<Boolean> translation = new ArrayList<>();
         int translationReaded = 0;
         for (int i = 0; i < huffmanDictionary.size(); i++) {
@@ -51,7 +51,7 @@ public class HuffmanDictionary {
             ArrayList <Boolean> hT = huffmanDictionary.get(i).huffmanTranslation;
             for (int j = 0; j < hT.size(); j++) {
                 if(translationReaded <= counter){
-                    translation.add(BitFileReader.readNBits(1) > 0);
+                    translation.add(BitFileReader.readNBitsWithPassword(1, "") > 0);
                     translationReaded++;
                 }
                 if(translation.get(counter) != hT.get(j)){

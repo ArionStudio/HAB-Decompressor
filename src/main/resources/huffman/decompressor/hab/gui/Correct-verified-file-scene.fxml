@@ -7,23 +7,31 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" prefHeight="412.0" prefWidth="716.0" spacing="20.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="huffman.decompressor.hab.gui.HelloController">
+<VBox
+        prefWidth="1360" prefHeight="720" spacing="20.0"
+        xmlns="http://javafx.com/javafx/17"
+        xmlns:fx="http://javafx.com/fxml/1"
+        fx:controller="huffman.decompressor.hab.gui.GetInfoSceneController"
+        stylesheets="@styles/main.css"
+>
 <padding>
     <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
 </padding>
-
-<Label fx:id="welcomeText" prefHeight="18.0" prefWidth="692.0" text="FileInfo:" />
-   <Label fx:id="compressed" graphicTextGap="2.0" prefHeight="18.0" prefWidth="697.0" text="Compressed: " />
-   <Label fx:id="encrypted" graphicTextGap="2.0" prefHeight="18.0" prefWidth="687.0" text="Encrypted: " />
-   <Pane prefHeight="186.0" prefWidth="676.0">
-      <children>
-         <Label fx:id="noText" layoutX="14.0" layoutY="54.0" />
-         <Button fx:id="toDecompress" layoutX="574.0" layoutY="122.0" mnemonicParsing="false" onAction="#switchToFinalScene" text="Decompress" />
-         <Button layoutX="14.0" layoutY="122.0" onAction="#sukces" text="Show Info" />
-         <Button layoutX="574.0" layoutY="20.0" mnemonicParsing="false" onAction="#fileWhereWillBeDecompressed" text="FindFIle" />
-         <Label fx:id="outfile" layoutY="24.0" prefHeight="17.0" prefWidth="554.0" text="Outfile: " />
-      </children>
-   </Pane>
-   <Accordion />
-
+   <Label fx:id="welcomeText" text="HAB Decompressor" styleClass="main-title" prefHeight="20.0"/>
+   <VBox fillWidth="800"  spacing="8.0">
+      <Label fx:id="filePath" prefHeight="18.0" prefWidth="692.0" text="File path:" />
+      <Label fx:id="compressed" graphicTextGap="2.0" prefHeight="18.0" prefWidth="697.0" text="Compressed: "/>
+      <Label fx:id="encrypted" graphicTextGap="2.0" prefHeight="18.0" prefWidth="687.0" text="Encrypted: " />
+      <Label fx:id="fileSize" graphicTextGap="2.0" prefHeight="18.0" prefWidth="687.0" text="Encrypted: " />
+      <Pane prefHeight="186.0" prefWidth="676.0">
+         <children>
+            <Label fx:id="noText" layoutX="14.0" layoutY="54.0" />
+            <Button fx:id="toDecompress" layoutX="574.0" layoutY="122.0" mnemonicParsing="false" onAction="#switchToFinalScene" text="Decompress" />
+            <Button layoutX="14.0" layoutY="122.0" onAction="#getFileInfo" text="Show Info" />
+            <Button layoutX="574.0" layoutY="20.0" mnemonicParsing="false" onAction="#fileWhereWillBeDecompressed" text="FindFIle" />
+            <Label fx:id="outfile" layoutY="24.0" prefHeight="17.0" prefWidth="554.0" text="Outfile: " />
+         </children>
+      </Pane>
+      <Accordion />
+   </VBox>
 </VBox>

@@ -58,6 +58,7 @@ Or if whit file is everything alright return:
             "compressed": integer,
             "encrypted": boolean,
             "size": long,
+            "file_path": String,
             // "estimated_time_in_secound": long 
         ]
     ]
