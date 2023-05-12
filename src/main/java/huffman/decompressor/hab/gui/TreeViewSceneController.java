@@ -108,11 +108,13 @@ public class TreeViewSceneController {
                 new EventHandler<ScrollEvent>() {
                     @Override
                     public void handle(ScrollEvent event) {
-                        double zoomFactor = 1.05;
+                        double zoomFactor = 1.3;
                         double deltaY = event.getDeltaY();
                         int xa,ya;
                         if (deltaY < 0){
-                            zoomFactor = 0.95;
+                            zoomFactor = 0.7;
+                        }else if(deltaY > 0){
+                            zoomFactor = 1/0.7;
                         }
                         xa = MouseInfo.getPointerInfo().getLocation().x;
                         ya = MouseInfo.getPointerInfo().getLocation().y;

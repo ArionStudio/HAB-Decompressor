@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class TreeNode {
     private int maxDepth;
 
-    private String saveAsTree="";
+    //private String saveAsTree="";
+    private StringBuilder sT;
     private ArrayList<Short> tempValuesOfTree;
     private ArrayList<ArrayList<Short>> forik;// = new ArrayList<>();
 
@@ -13,9 +14,10 @@ public class TreeNode {
         tempValuesOfTree = new ArrayList<>();
         this.maxDepth = max;
         this.forik = forik;
+        sT = new StringBuilder();
     }
     public String getTree(){
-        return saveAsTree;
+        return sT.toString();
     }
 
     public void printTree() {
@@ -66,7 +68,8 @@ public class TreeNode {
                     if (k == false) {
                         for (int i = 0; i < leftWidth - odds; i++) {
                             //System.out.print(" ");
-                            saveAsTree+=" ";
+                            //saveAsTree+=" ";
+                            sT.append(" ");
                         }
                         k = true;
                     }
@@ -75,34 +78,42 @@ public class TreeNode {
                         if (tempValuesOfTree.get(j) >= 0) {
                             if ((tempValuesOfTree.get(j) < 10) && (tempValuesOfTree.get(j) >= 0)) {
                                 //System.out.print("  " + tempValuesOfTree.get(j) + "  ");
-                                saveAsTree+="  " + tempValuesOfTree.get(j) + "  ";
+                                //saveAsTree+="  " + tempValuesOfTree.get(j) + "  ";
+                                sT.append("  " + tempValuesOfTree.get(j) + "  ");
                             } else if ((tempValuesOfTree.get(j) < 100) && (tempValuesOfTree.get(j) >= 10)) {
                                 //System.out.print(" " + tempValuesOfTree.get(j) + "  ");
-                                saveAsTree+=" " + tempValuesOfTree.get(j) + "  ";
+                                //saveAsTree+=" " + tempValuesOfTree.get(j) + "  ";
+                                sT.append(" " + tempValuesOfTree.get(j) + "  ");
                             } else if ((tempValuesOfTree.get(j) < 1000) && (tempValuesOfTree.get(j) >= 100)) {
                                 //System.out.print(" " + tempValuesOfTree.get(j) + " ");
-                                saveAsTree+=" " + tempValuesOfTree.get(j) + " ";
+                                //saveAsTree+=" " + tempValuesOfTree.get(j) + " ";
+                                sT.append(" " + tempValuesOfTree.get(j) + " ");
                             } else if ((tempValuesOfTree.get(j) < 10000) && (tempValuesOfTree.get(j) >= 1000)) {
                                 //System.out.print(" " + tempValuesOfTree.get(j));
-                                saveAsTree+=" " + tempValuesOfTree.get(j);
+                                //saveAsTree+=" " + tempValuesOfTree.get(j);
+                                sT.append(" " + tempValuesOfTree.get(j));
                             } else if ((tempValuesOfTree.get(j) <= 65535) && (tempValuesOfTree.get(j) >= 10000)) {
                                 //System.out.print(tempValuesOfTree.get(j));
-                                saveAsTree+=tempValuesOfTree.get(j);
+                                //saveAsTree+=tempValuesOfTree.get(j);
+                                sT.append(tempValuesOfTree.get(j));
                             }
                         } else {
                             if (tempValuesOfTree.get(j) == -1) {
                                 //System.out.print("[   ]");
-                                saveAsTree+="[   ]";
+                                //saveAsTree+="[   ]";
+                                sT.append("[   ]");
                             }
                         }
                     }else{
                         //System.out.print("     ");
-                        saveAsTree+="     ";
+                        //saveAsTree+="     ";
+                        sT.append("     ");
                     }
                     if(j < iterate-1) {
                         for (int i = 0; i < /*middleWidth*/tabOfMiddleValuesWidths[it + count]; i++) {
                             //System.out.print(" ");
-                            saveAsTree += " ";
+                            //saveAsTree += " ";
+                            sT.append(" ");
                         }
                     }
                     iterateByArray++;
@@ -116,7 +127,8 @@ public class TreeNode {
                 int tempMiddleWidth = middleWidth;
 
                 //System.out.println();
-                saveAsTree+="\n";
+                //saveAsTree+="\n";
+                sT.append("\n");
                 middleWidth -= 2;
                 if (jtw > 0) {
                     leftWidth -= 3;
@@ -133,44 +145,53 @@ public class TreeNode {
                         if (l == false) {
                             for (int i = 0; i < leftWidth; i++) {
                                 //System.out.print(" ");
-                                saveAsTree+=" ";
+                                //saveAsTree+=" ";
+                                sT.append(" ");
                             }
                             l = true;
                         }
                         if(j < smth-1 ) {
                             if (tempValuesOfTree.get(j) >= 0) {
                                 //System.out.print(" ");
-                                saveAsTree+=" ";
+                                //saveAsTree+=" ";
+                                sT.append(" ");
                             } else {
                                 //System.out.print("/");
-                                saveAsTree+="/";
+                                //saveAsTree+="/";
+                                sT.append("/");
                             }
                         }else{
                             //System.out.print(" ");
-                            saveAsTree+=" ";
+                            //saveAsTree+=" ";
+                            sT.append(" ");
                         }
 
                         for (int i = 0; i < iterateByShortWidth; i++) {
                             //System.out.print(" ");
-                            saveAsTree+=" ";
+                            //saveAsTree+=" ";
+                            sT.append(" ");
                         }
 
                         if(j < smth-1 ) {
                             if (tempValuesOfTree.get(j) >= 0) {
                                 //System.out.print(" ");
-                                saveAsTree+=" ";
+                                //saveAsTree+=" ";
+                                sT.append(" ");
                             } else {
                                 //System.out.print("\\");
-                                saveAsTree+="\\";
+                                //saveAsTree+="\\";
+                                sT.append("\\");
                             }
                         }else{
                             //System.out.print(" ");
-                            saveAsTree+=" ";
+                            //saveAsTree+=" ";
+                            sT.append(" ");
                         }
                         if(j < iterate-1) {
                             for (int i = 0; i < /*bylo middleWidth*/ upperIterator; i++) {
                                 //System.out.print(" ");
-                                saveAsTree+=" ";
+                                //saveAsTree+=" ";
+                                sT.append(" ");
                             }
                         }
                         iterateByShortWidth += 2;
@@ -181,7 +202,8 @@ public class TreeNode {
                     upperIterator -= 2;
                     leftWidth--;
                     //System.out.println();
-                    saveAsTree+="\n";
+                    //saveAsTree+="\n";
+                    sT.append("\n");
                 }
                 tempValuesOfTree.removeAll(tempValuesOfTree);
                 middleWidth += 2;
