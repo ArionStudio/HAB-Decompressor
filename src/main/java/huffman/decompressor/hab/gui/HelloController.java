@@ -48,6 +48,8 @@ public class HelloController implements Initializable {
     @FXML
     private Label outfile;
 
+    @FXML
+    private Label status;
 
     @FXML
     protected void onHelloButtonClick() {
@@ -59,6 +61,7 @@ public class HelloController implements Initializable {
 
     @FXML
     protected void getFileDataAndGoToScene(ActionEvent e) throws IOException {
+        status.setText("Loading...");
         File file = fileChooser.showOpenDialog(null);
         if(file != null) {
             filePath = file.getAbsolutePath();

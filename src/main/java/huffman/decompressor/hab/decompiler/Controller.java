@@ -48,6 +48,7 @@ public class Controller {
             getOptExeptionMap(back, e);
         } catch (Exception e) {
             getExeptionMap(back, e);
+            e.printStackTrace();
         }
         return back;
     }
@@ -87,7 +88,7 @@ public class Controller {
             password = getOpt.getOption("d");
         }
         String inFilePath = getOpt.getOption("i");
-        String outFilePath = "result.txt";
+        String outFilePath = "decompressed\\result.txt";
         if(getOpt.exist("o")){
             outFilePath = getOpt.getOption("o");
         }

@@ -66,10 +66,11 @@ public class Decompiler {
 
             treeLayerArray = getSimpleDictionaryFromFile();
             fileStatus = xorValidte();
-
+            System.out.println(this);
 
 //
         }catch (Exception e){
+            e.printStackTrace();
             throw new Exception("File error: unexpected end\n"); //
         }
         try{
@@ -79,6 +80,7 @@ public class Decompiler {
             System.err.println("\n" + e.getMessage());
             System.exit(1);
         }
+        BitFileWriter.fileClose();
     }
 
     public void makeHuffmanDictionary() {
@@ -95,6 +97,10 @@ public class Decompiler {
     }
 
     public void decompressFile(String outFilePath) throws Exception {
+        if(compressionLevel == 0){
+            deCryptFile(outFilePath);
+            return;
+        }
         StringBuilder decompressedFile = new StringBuilder();
         int array [] = {8, 8, 8, 1, 1, 8, 5, compressionLevel, compressionLevel - 1, compressionLevel, 3};
         BitFileReader.resetReader();
@@ -136,6 +142,32 @@ public class Decompiler {
             throw e;
         }
         System.out.println(decompressedFile);
+        BitFileWriter.fileClose();
+    }
+
+    private void deCryptFile(String outFilePath) throws Exception{
+        int array [] = {8, 8, 8, 8};
+        BitFileReader.resetReader();
+        for (int i = 0; i < array.length; i++) {
+            short readedBits = (short) BitFileReader.readNBits(array[i]);
+            System.err.println(readedBits);
+        }
+
+        BitFileReader.readUnreadBits();
+        BitFileWriter.getInstance(outFilePath);
+
+        try{
+            while(BitFileReader.byteToEnd() > 0 || BitFileReader.getUnreadBits() > originUsslessBits ){
+                short code = (short) BitFileReader.readNBitsWithPassword(8, password);
+                System.err.println(code);
+                BitFileWriter.writeExactBits(8, code);
+            }
+        }catch (Exception e){
+            System.err.println(e.getMessage());
+            e.printStackTrace();
+            BitFileWriter.fileClose();
+            throw e;
+        }
     }
 
     public HashMap<String, Object> getBasicInfoAsMap(){

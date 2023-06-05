@@ -9,6 +9,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -28,7 +29,8 @@ public class GetInfoSceneController {
     public Label outfile;
     public Label filePath;
     public Button toDecrypt;
-    public Text passInput;
+    public TextField passInput;
+    public Label status;
     @FXML
     private Label fileSize;
     private final FileChooser fileChooser = new FileChooser();
@@ -43,6 +45,8 @@ public class GetInfoSceneController {
         Parent parent = loader.load();
         TreeViewSceneController controller = loader.getController();
         HashMap<String, Object> map;
+        password = passInput.getText();
+        status.setText("Loading...");
         if(password.length() == 0){
             map = Controller.decompressFile(new String[]{"-i", inFilePath, "-o", outFilePath});
         }else{
@@ -58,25 +62,29 @@ public class GetInfoSceneController {
         stageF.setScene(sceneF);
         stageF.show();
     }
+    @FXML
+    protected void setToPrimaryScene(ActionEvent e) throws IOException {
+        Parent parentF = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Stage stageF = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Scene sceneF = new Scene(parentF);
+        stageF.setScene(sceneF);
+        stageF.show();
+    }
 
     @FXML
     protected void setFileInfo(Map<String, Object> fileInfo) throws IOException {
         byte c = (Byte) fileInfo.get("compressed");
         boolean e = (Boolean) fileInfo.get("encrypted");
-        if(c > 0){
-            toDecompress.setVisible(true);
-            toDecrypt.setVisible(false);
-        }else{
-            toDecompress.setVisible(false);
-            toDecrypt.setVisible(e);
-            passInput.setVisible(e);
-        }
+        System.err.println(e + "  " + c);
+        toDecompress.setVisible(c > 0);
+        passInput.setVisible(e );
+        toDecrypt.setVisible(e && c == 0);
         compressed.setText("Compressed: " + (c > 0) );
         encrypted.setText("Encrypted: " + e );
         fileSize.setText("File size: " + fileInfo.get("size"));
         inFilePath = (String) fileInfo.get("file_path");
         filePath.setText("File path: " + inFilePath);
-        outFilePath = "result.txt";
+        outFilePath = "decompressed\\result.txt";
         password = passInput.getText();
     }
 

@@ -26,6 +26,7 @@ public class TreeViewSceneController {
     public Label action_time;
     public Label new_file_size;
     public Label new_file_path;
+    public Label status;
     @FXML
     private Pane paneT;
     private Scene sceneTT;
@@ -39,7 +40,7 @@ public class TreeViewSceneController {
 
 
     public void switchToTreeView(ActionEvent e) throws IOException {
-
+        status.setText("Loading...");
         Stage stageT = (Stage) ((Node) e.getSource()).getScene().getWindow();
         paneT = new Pane();
 
@@ -78,12 +79,20 @@ public class TreeViewSceneController {
     }
 
     public void setDecompressedFileInfo(HashMap<String, Object> decompressedFileInfo) {
-        new_file_path.setText("Action time: " + decompressedFileInfo.get("out_file_path"));
+        action_time.setText("Action time: " + decompressedFileInfo.get("out_file_path"));
         new_file_size.setText("New file size: " + decompressedFileInfo.get("decompressed_file_size"));
-        action_time.setText("New file path: " + decompressedFileInfo.get("decompress_time"));
+        new_file_path.setText("New file path: " + decompressedFileInfo.get("decompress_time"));
         in_file_path = (String) decompressedFileInfo.get("in_file_path");
     }
 
+    @FXML
+    protected void setToPrimaryScene(ActionEvent e) throws IOException {
+        Parent parentF = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
+        Stage stageF = (Stage) ((Node) e.getSource()).getScene().getWindow();
+        Scene sceneF = new Scene(parentF);
+        stageF.setScene(sceneF);
+        stageF.show();
+    }
     private class DragabbleM{
         double mouseX;
         double mouseY;

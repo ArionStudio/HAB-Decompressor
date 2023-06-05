@@ -24,6 +24,16 @@ public class BitFileReader {
         }
     }
 
+    public  static void fileClose(){
+        try {
+            if(file != null){
+                file.close();
+            }
+        } catch (IOException e) {
+            System.err.println("File is closed already!");
+        }
+    }
+
     public static void getInstance(String FileName) throws Exception {
         instance = new BitFileReader(FileName);
     }
@@ -82,7 +92,8 @@ public class BitFileReader {
     public static int readNBitsWithPassword(int n, String password) throws IOException {
         while(unreadBits < n){
             long a = 0;
-            if(n - unreadBits < 8){
+            if(n - unreadBits <= 8){
+
                 a = (long) byteFile.readUnsignedByte();
                 a = (long) decrypt((byte)a, password);
                 unreadBits += 8;

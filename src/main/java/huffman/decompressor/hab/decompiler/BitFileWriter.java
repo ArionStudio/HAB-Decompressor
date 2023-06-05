@@ -36,6 +36,17 @@ public class BitFileWriter {
         }
     }
 
+
+    public  static void fileClose(){
+        try {
+            if(file != null){
+                file.close();
+            }
+        } catch (IOException e) {
+            System.err.println("File is closed already!");
+        }
+    }
+
     public static void writeExactBits(int bits, long data) throws IOException {
         data <<= 64 - (unwriteBits + bits);
         buffor += data;

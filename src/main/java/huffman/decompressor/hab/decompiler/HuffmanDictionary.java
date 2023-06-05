@@ -1,5 +1,6 @@
 package huffman.decompressor.hab.decompiler;
 
+import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.RandomAccess;
@@ -51,7 +52,11 @@ public class HuffmanDictionary {
             ArrayList <Boolean> hT = huffmanDictionary.get(i).huffmanTranslation;
             for (int j = 0; j < hT.size(); j++) {
                 if(translationReaded <= counter){
-                    translation.add(BitFileReader.readNBitsWithPassword(1, "") > 0);
+                    try{
+                        translation.add(BitFileReader.readNBitsWithPassword(1, password) > 0);
+                    }catch (IOException e){
+                        break;
+                    }
                     translationReaded++;
                 }
                 if(translation.get(counter) != hT.get(j)){
