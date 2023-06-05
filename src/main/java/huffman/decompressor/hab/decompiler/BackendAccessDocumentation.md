@@ -100,7 +100,7 @@ So we can say is like this:
 | leaf               | their code from 0 to 2^compressed level |
 | last node on layer | number of node to get binary tree       | 
 
-Result tree of our program \
+Result tree of our program from example file\
 <img src="./resources/Zrzut ekranu 2023-06-05 012311.png" alt="Real tree" width="600">
 
 
